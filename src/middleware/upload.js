@@ -6,4 +6,13 @@ const multer = require("multer");
 
 const upload = multer({ storage });
 
-module.exports = upload;
+const uploadMiddleware = (req, res, next) => {
+  upload.single("image")(req, res, (err) => {
+    if (err) {
+      return res.status(400).send("Error uploading file");
+    }
+    next();
+  });
+};
+
+module.exports = { uploadMiddleware };
