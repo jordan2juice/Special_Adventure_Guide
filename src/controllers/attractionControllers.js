@@ -34,6 +34,19 @@ async function getAttractions(req, res, next) {
   }
 }
 
+async function getAttractionById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const attraction = await Attraction.findById(id);
+    if (!attraction) {
+      return res.status(404).json({ message: "Attraction not found" });
+    }
+    res.status(200).json(attraction);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function updateAttraction(req, res, next) {
   try {
     const attraction = await Attraction.findById(req.params.id);
@@ -73,6 +86,7 @@ async function deleteAttraction(req, res, next) {
 module.exports = {
   newAttraction,
   getAttractions,
+  getAttractionById,
   updateAttraction,
   deleteAttraction,
 };

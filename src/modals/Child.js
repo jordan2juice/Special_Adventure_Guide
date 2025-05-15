@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const childProfileSchema = new mongoose.Schema(
   {
-    userId: { name: String, required: true },
+    userId: String,
     name: String,
     age: Number,
     diagosis: [String],

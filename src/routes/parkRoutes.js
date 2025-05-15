@@ -1,24 +1,22 @@
 "use strict";
 
 const express = require("express");
-
 const {
-  getPark,
-  getParkbyId,
+  getParks,
+  getParkById,
   newPark,
-  updatePark,
+  updateParks,
   deletePark,
 } = require("../controllers/parkControllers");
-
-const upload = require("../middleware/upload");
-
 const park = express.Router();
 
-park.route("/parks").post(upload.single("image"), newPark).get(getPark);
+park.route("/parks").get(getParks);
 
-park.route("/parks/:id").get(getParkbyId);
+park.route("/parks/:id").get(getParkById);
 
-park.route("/parks/:id").put(updatePark);
+park.route("/parks").post(newPark);
+
+park.route("/parks/:id").put(updateParks);
 
 park.route("/parks/:id").delete(deletePark);
 

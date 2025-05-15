@@ -6,6 +6,15 @@ async function home(req, res, next) {
   res.send("Welcome to the Park API");
 }
 
+async function getParks(req, res, next) {
+  try {
+    const parks = await Park.find();
+    res.status(200).json(parks);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function newPark(req, res, next) {
   try {
     const { name, location, description } = req.body;
@@ -14,17 +23,8 @@ async function newPark(req, res, next) {
       location,
       description,
     });
-    await newPark.save();
-    res.status(201).json(newPark);
-  } catch (error) {
-    next(error);
-  }
-}
-
-async function getParks(req, res, next) {
-  try {
-    const parks = await Park.find();
-    res.status(200).json(parks);
+    await park.save();
+    res.status(201).json(park);
   } catch (error) {
     next(error);
   }
@@ -56,10 +56,24 @@ async function deletePark(req, res, next) {
   }
 }
 
+async function getParkById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const park = await Park.findById(id);
+    if (!park) {
+      return res.status(404).json({ message: "Park not found" });
+    }
+    res.status(200).json(park);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   home,
-  newPark,
   getParks,
+  newPark,
   updateParks,
   deletePark,
+  getParkById,
 };

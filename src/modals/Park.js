@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 const parkSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    name: String,
     location: String,
     description: String,
   },
