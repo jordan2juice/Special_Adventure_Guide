@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 8000;
 const cors = require("cors");
@@ -15,8 +16,9 @@ const child = require("./src/routes/childRoutes");
 app.use(cors());
 app.use(express.json());
 
-mongooseConnect().catch((error) => {
-  console.log(error);
+// Connect to MongoDB
+mongooseConnect().then(() => {
+  console.log("Connected to MongoDB");
 });
 
 // Routes
